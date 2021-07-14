@@ -6,9 +6,11 @@
         <artifactId>oss-parent</artifactId>
         <version>5</version>
     </parent>
-    
-    <artifactId>gdx-platform-metalangle</artifactId>
-    <packaging>jar</packaging>
+
+    <groupId>com.badlogicgames.gdx</groupId>
+    <artifactId>gdx-platform</artifactId>
+    <version>1.10.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>libGDX Native Libraries</name>
     
     <properties>
@@ -43,27 +45,59 @@
                 </executions>
             </plugin>
 
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <executions>
-                        <execution>
-                            <id>build-natives</id>
-                            <phase>compile</phase>
-                            <configuration>
-                                <executable>./gradlew</executable>
-                                <arguments>
-                                    <argument>jnigenBuildIOS</argument>
-                                </arguments>
-                                <workingDirectory>../../</workingDirectory>
-                            </configuration>
-                            <goals>
-                                <goal>exec</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>build-natives</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <executable>gradlew</executable>
+                            <arguments>
+                                <argument>jnigenBuildIOS</argument>
+                            </arguments>
+                            <workingDirectory>../../</workingDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>local-install</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <target>
+                                <mkdir dir="${settings.localRepository}/com/badlogicgames/gdx/${artifactId}/${version}/" />
+                                <copy todir="${settings.localRepository}/com/badlogicgames/gdx/${artifactId}/${version}/">
+                                    <fileset dir="${basedir}/target/" includes="${artifactId}-${version}-natives-ios-metalangle.jar" />
+                                </copy>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- finally package everything up into jar files -->
             <plugin>
