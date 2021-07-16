@@ -64,6 +64,17 @@
                             <goal>exec</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>build-objectal</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <executable>build-objectal.sh</executable>
+                            <workingDirectory>../../</workingDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
 
