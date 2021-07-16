@@ -12,17 +12,17 @@
     <version>1.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>libGDX Native Libraries</name>
-    
+
     <properties>
         <base.url>https://libgdx-nightlies.s3.eu-central-1.amazonaws.com/libgdx-natives</base.url>
     </properties>
-    
+
     <dependencies>
     </dependencies>
-    
+
     <build>
         <sourceDirectory>src</sourceDirectory>
-        
+
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -128,6 +128,46 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>../target/</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>../jni-headers/</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>../../libs/</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>../../jni/</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <excludes>
+                                <exclude>robovm.xml</exclude>
+                                <exclude>.gitignore</exclude>
+                                <exclude>etc1/**</exclude>
+                                <exclude>gdx2d/**</exclude>
+                                <exclude>iosgl/**</exclude>
+                                <exclude>maven/**</exclude>
+                            </excludes>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>
