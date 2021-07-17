@@ -26,6 +26,14 @@ buildscript {
     }
 }
 
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencies {
+    compileOnly "com.badlogicgames.gdx:gdx-jnigen-loader:2.2.0"
+}
+
 jnigen {
     sharedLibName = "gdx"
     temporaryDir = "target/native"

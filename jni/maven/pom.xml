@@ -51,6 +51,17 @@
                 <version>3.0.0</version>
                 <executions>
                     <execution>
+                        <id>fetch-gdx-source</id>
+                        <phase>validate</phase>
+                        <configuration>
+                            <executable>download-gdx-src.sh</executable>
+                            <workingDirectory>../../</workingDirectory>
+                        </configuration>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                    <execution>
                         <id>build-natives</id>
                         <phase>compile</phase>
                         <configuration>
@@ -150,6 +161,18 @@
                             <directory>../../libs/</directory>
                             <includes>
                                 <include>**</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>../../build/</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                        </fileset>
+                        <fileset>
+                            <directory>../../src/main/java/</directory>
+                            <includes>
+                                <include>**/*</include>
                             </includes>
                         </fileset>
                         <fileset>
