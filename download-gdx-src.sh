@@ -23,11 +23,11 @@ git sparse-checkout add backends/gdx-backend-moe/
 git sparse-checkout add pom.xml
 
 cd backends/gdx-backend-robovm
-sed -i 's/gdx-backend-robovm/gdx-backend-robovm-metalangle/g' pom.xml
+sed -i '' 's/gdx-backend-robovm/gdx-backend-robovm-metalangle/g' pom.xml
 mvn install
 cd ..
 cd gdx-backend-moe
-sed -i 's/gdx-backend-moe/gdx-backend-moe-metalangle/g' pom.xml
+sed -i '' 's/gdx-backend-moe/gdx-backend-moe-metalangle/g' pom.xml
 mvn install
 
 cd $JAVADIR
