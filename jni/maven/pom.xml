@@ -94,8 +94,16 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
-                    <skip>true</skip>
+                    <file>target/gdx-platform-${version}-natives-ios-metalangle.jar</file>
+                    <groupId>${groupId}</groupId>
+                    <artifactId>${artifactId}</artifactId>
+                    <version>${version}</version>
+                    <packaging>jar</packaging>
+                    <classifier>natives-ios-metalangle</classifier>
                 </configuration>
+                <goals>
+                    <goal>install-file</goal>
+                </goals>
             </plugin>
 
             <plugin>
@@ -110,21 +118,6 @@
                             <target>
                                 <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.zip" dest="target/"/>
                                 <unzip src="target/libMetalANGLE.a.ios.zip" dest="../../libs/ios32/"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>local-install</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <target>
-                                <mkdir dir="${settings.localRepository}/com/badlogicgames/gdx/${artifactId}/${version}/" />
-                                <copy todir="${settings.localRepository}/com/badlogicgames/gdx/${artifactId}/${version}/">
-                                    <fileset dir="${basedir}/target/" includes="${artifactId}-${version}-natives-ios-metalangle.jar" />
-                                </copy>
                             </target>
                         </configuration>
                         <goals>
