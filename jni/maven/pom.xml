@@ -113,11 +113,12 @@
                 <executions>
                     <execution>
                         <id>fetch-metalangle</id>
-                        <phase>package</phase>
+                        <phase>validate</phase>
                         <configuration>
                             <target>
+                                <mkdir dir="target/ios/"/>
                                 <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.zip" dest="target/"/>
-                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="../../libs/ios32/"/>
+                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="target/ios/"/>
                             </target>
                         </configuration>
                         <goals>
