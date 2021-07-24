@@ -23,11 +23,16 @@ git sparse-checkout add backends/gdx-backend-moe/
 git sparse-checkout add pom.xml
 
 cd backends/gdx-backend-robovm
+# Maybe this can be reduced to a singe sed?
 sed -i '' 's/gdx-backend-robovm/gdx-backend-robovm-metalangle/g' pom.xml
+sed -i '' 's/project.groupId/parent.groupId/g' pom.xml
+sed -i '' '/^.*gdx-backend-robovm-metalangle.*/i \ \ <groupId>io.github.berstanio</groupId>' pom.xml
 mvn install
 cd ..
 cd gdx-backend-moe
 sed -i '' 's/gdx-backend-moe/gdx-backend-moe-metalangle/g' pom.xml
+sed -i '' 's/project.groupId/parent.groupId/g' pom.xml
+sed -i '' '/.*gdx-backend-moe-metalangle.*/i \ \ <groupId>io.github.berstanio</groupId>' pom.xml
 mvn install
 
 cd $JAVADIR

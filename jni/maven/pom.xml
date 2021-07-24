@@ -7,7 +7,7 @@
         <version>5</version>
     </parent>
 
-    <groupId>com.badlogicgames.gdx</groupId>
+    <groupId>io.github.berstanio</groupId>
     <artifactId>gdx-platform</artifactId>
     <version>1.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
