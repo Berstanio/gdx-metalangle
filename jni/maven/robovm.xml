@@ -2,6 +2,6 @@
 	<libs>
 		<lib>libs/libgdx.a</lib>
 		<lib>libs/libObjectAL.a</lib>
-		<lib>libMetalANGLE_static.a</lib>
+		<lib>libs/libMetalANGLE_static.a</lib>
 	</libs>
 </config>
