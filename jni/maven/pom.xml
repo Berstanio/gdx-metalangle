@@ -27,22 +27,23 @@
 
         <plugins>
             <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
                 <executions>
                     <execution>
-                        <id>copy-local-ios</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
+                        <id>fetch-metalangle</id>
+                        <phase>validate</phase>
                         <configuration>
-                            <resources>
-                                <resource><directory>${basedir}/../../libs/ios32</directory></resource>
-                            </resources>
-                            <outputDirectory>${basedir}/target/ios</outputDirectory>
-                            <overwrite>true</overwrite>
+                            <target>
+                                <mkdir dir="target/ios/"/>
+                                <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.zip" dest="target/"/>
+                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="target/ios/"/>
+                            </target>
                         </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -92,75 +93,22 @@
             </plugin>
 
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.7</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.5</version>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
                 <executions>
                     <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
+                        <id>copy-local-ios</id>
+                        <phase>prepare-package</phase>
                         <goals>
-                            <goal>sign</goal>
+                            <goal>copy-resources</goal>
                         </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-install-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <file>target/gdx-platform-${version}-natives-ios-metalangle.jar</file>
-                    <groupId>${groupId}</groupId>
-                    <artifactId>${artifactId}</artifactId>
-                    <version>${version}</version>
-                    <packaging>jar</packaging>
-                    <classifier>natives-ios-metalangle</classifier>
-                </configuration>
-                <goals>
-                    <goal>install-file</goal>
-                </goals>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <id>fetch-metalangle</id>
-                        <phase>validate</phase>
                         <configuration>
-                            <target>
-                                <mkdir dir="target/ios/"/>
-                                <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.zip" dest="target/"/>
-                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="target/ios/"/>
-                            </target>
+                            <resources>
+                                <resource><directory>${basedir}/../../libs/ios32</directory></resource>
+                            </resources>
+                            <outputDirectory>${basedir}/target/ios</outputDirectory>
+                            <overwrite>true</overwrite>
                         </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -184,6 +132,60 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <file>target/gdx-platform-${version}-natives-ios-metalangle.jar</file>
+                    <groupId>${groupId}</groupId>
+                    <artifactId>${artifactId}</artifactId>
+                    <version>${version}</version>
+                    <packaging>jar</packaging>
+                    <classifier>natives-ios-metalangle</classifier>
+                </configuration>
+                <goals>
+                    <goal>install-file</goal>
+                </goals>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.1.0</version>
