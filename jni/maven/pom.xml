@@ -36,9 +36,27 @@
                         <phase>validate</phase>
                         <configuration>
                             <target>
-                                <mkdir dir="target/ios/"/>
+                                <mkdir dir="target/iosSim/"/>
+                                <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.simulator.zip" dest="target/"/>
+                                <unzip src="target/libMetalANGLE.a.ios.simulator.zip" dest="target/iosSim/"/>
+                                <exec executable="lipo">
+                                    <arg value="-remove"/>
+                                    <arg value="arm64"/>
+                                    <arg value="target/iosSim/libMetalANGLE_static.a"/>
+                                    <arg value="-output"/>
+                                    <arg value="target/iosSim/libMetalANGLE_static_stripped.a"/>
+                                </exec>
+                                <mkdir dir="target/iosReal/"/>
                                 <get src="https://github.com/kakashidinho/metalangle/releases/download/gles3-0.0.7/libMetalANGLE.a.ios.zip" dest="target/"/>
-                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="target/ios/"/>
+                                <unzip src="target/libMetalANGLE.a.ios.zip" dest="target/iosReal/"/>
+                                <mkdir dir="target/ios/"/>
+                                <exec executable="lipo">
+                                    <arg value="-create"/>
+                                    <arg value="target/iosReal/libMetalANGLE_static.a"/>
+                                    <arg value="target/iosSim/libMetalANGLE_static_stripped.a"/>
+                                    <arg value="-output"/>
+                                    <arg value="target/ios/libMetalANGLE_static.a"/>
+                                </exec>
                             </target>
                         </configuration>
                         <goals>
