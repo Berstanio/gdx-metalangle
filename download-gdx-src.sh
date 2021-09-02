@@ -38,6 +38,9 @@ sed -i '' 's/gdx-backend-moe/gdx-backend-moe-metalangle/g' pom.xml
 sed -i '' 's/project.groupId/parent.groupId/g' pom.xml
 awk '/gdx-backend-moe-metalangle/{print "  <groupId>io.github.berstanio</groupId>"}1' pom.xml > pom.tmp.xml && mv pom.tmp.xml pom.xml
 mvn deploy
+sed -i '' 's/gdx-backend-moe-metalangle/gdx-backend-moe-art-metalangle/g' pom.xml
+rm -r src/com/badlogic/gdx/backends/svm/
+mvn clean deploy
 
 cd $JAVADIR
 #Make symbolic link in the src folder so jnigen can find them
