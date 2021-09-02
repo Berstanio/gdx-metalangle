@@ -2,6 +2,8 @@
 set -e
 BASE=$(cd $(dirname $0); pwd -P)
 
+export GPG_TTY=$(tty)
+
 JAVADIR=$BASE/src/main/java
 
 rm -rf $JAVADIR
